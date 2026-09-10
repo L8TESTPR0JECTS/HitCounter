@@ -16,6 +16,7 @@ The project started as a hit counter and is growing into a compact WebSocket pla
 <p>
   <a href="#the-idea">The idea</a> |
   <a href="#how-it-works">How it works</a> |
+  <a href="#system-visual">System visual</a> |
   <a href="#run-it-locally">Run it locally</a> |
   <a href="#repository-map">Repository map</a>
 </p>
@@ -106,6 +107,18 @@ The outer repository intentionally keeps the two runtime pieces together:
 - `server/` owns the API, Redis keys, uniqueness rules, TTLs, and WebSocket client set;
 - `web/` owns the interaction model, routes, visual language, and client configuration;
 - `docker-compose.yml` supplies the local network where the browser-facing web container can proxy to the API container.
+
+## System visual
+
+The current implementation is summarized in the diagram below. It shows the browser-facing React and Vite layer, Nginx as the production reverse proxy, the FastAPI backend, and Redis as the shared source for daily counter and visitor identity state.
+
+<p align="center">
+  <img src="./docs/hit-counter-architecture.png" alt="HitCounter current implementation architecture" width="100%">
+</p>
+
+<p align="center"><em>One small event, one shared state, every connected client kept current.</em></p>
+
+The Docker Compose section of the visual describes the local container topology. For the exact request paths, environment defaults, and independent development commands, keep [the API surface](#api-surface) and [configuration](#configuration) as the source of truth.
 
 ## API surface
 
